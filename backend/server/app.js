@@ -10,9 +10,10 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const routes_1 = __importDefault(require("./routes"));
 require("dotenv").config({ path: "./.env" });
 const index_1 = __importDefault(require("./routes/index"));
-const users_1 = __importDefault(require("./routes/users"));
+const user_1 = __importDefault(require("./routes/user"));
 const app = (0, express_1.default)();
 app.use((0, morgan_1.default)("dev"));
 app.use((0, cookie_parser_1.default)());
@@ -21,7 +22,7 @@ app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.static(path_1.default.resolve("../frontend/client")));
-mongoose_1.default.connect(process.env.DATABASE, function (error) {
+mongoose_1.default.connect(process.env.DATABASE_URL, function (error) {
     if (error) {
         console.log(error);
     }
@@ -30,7 +31,7 @@ mongoose_1.default.connect(process.env.DATABASE, function (error) {
     }
 });
 app.use("/", index_1.default);
-app.use("/users", users_1.default);
+app.use("/user", user_1.default);
 app.use((next) => {
     next((0, http_errors_1.default)(404));
 });
@@ -40,6 +41,7 @@ app.use((err, req, res) => {
     res.status(err.status || 500);
     res.render("error");
 });
+app.use(routes_1.default);
 app.get("*", (_, res) => {
     res.sendFile(path_1.default.resolve("../frontend/client/index.html"));
 });
