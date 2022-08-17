@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const user_model_1 = __importDefault(require("../models/user.model"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const user_model_1 = __importDefault(require("../models/user.model"));
 const router = (0, express_1.Router)();
 router.post("/", (req, res) => {
     console.log(req.body);
@@ -17,7 +17,7 @@ router.post("/", (req, res) => {
     });
     newUser.save((err) => {
         if (err) {
-            res.status(400).json("L'inscription a échoué.");
+            res.status(400).json("Inscription échoué.");
         }
         else {
             res.json("Inscription validé.");
@@ -25,4 +25,4 @@ router.post("/", (req, res) => {
     });
 });
 exports.default = router;
-//# sourceMappingURL=user.js.map
+//# sourceMappingURL=user.route.js.map
