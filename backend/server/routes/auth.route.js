@@ -9,6 +9,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const fs_1 = __importDefault(require("fs"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 const router = (0, express_1.Router)();
+const RSA_PUB = fs_1.default.readFileSync("./rsa/key.pub");
 const RSA_PRIVATE = fs_1.default.readFileSync("./rsa/key");
 router.post("/connexion", async (req, res) => {
     try {
@@ -28,6 +29,34 @@ router.post("/connexion", async (req, res) => {
     }
     catch (e) {
         return res.status(401).json("Email et/ou mot de passe incorrect(s).");
+    }
+});
+router.get("/currentuser", async (req, res) => {
+    const token = req.cookies.token;
+    if (token) {
+        try {
+            const decodedToken = jsonwebtoken_1.default.verify(token, RSA_PUB);
+            if (decodedToken) {
+                const user = await user_model_1.default.findById(decodedToken.sub)
+                    .select("-password -__v")
+                    .exec();
+                if (user) {
+                    res.json(user);
+                }
+                else {
+                    res.json(null);
+                }
+            }
+            else {
+                res.json(null);
+            }
+        }
+        catch (e) {
+            res.json(null);
+        }
+    }
+    else {
+        res.json(null);
     }
 });
 exports.default = router;
