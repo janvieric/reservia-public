@@ -31,6 +31,10 @@ router.post("/connexion", async (req, res) => {
         return res.status(401).json("Email et/ou mot de passe incorrect(s).");
     }
 });
+router.delete("/logout", (_, res) => {
+    res.clearCookie("token");
+    res.end();
+});
 router.get("/currentuser", async (req, res) => {
     const token = req.cookies.token;
     if (token) {

@@ -8,7 +8,6 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 const router = (0, express_1.Router)();
 router.post("/", (req, res) => {
-    console.log(req.body);
     const newUser = new user_model_1.default({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
