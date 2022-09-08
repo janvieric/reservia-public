@@ -78,6 +78,9 @@ MIT
 @ngrx/store-devtools
 MIT
 
+ng-starrating
+MIT
+
 rxjs
 Apache-2.0
                                Apache License
