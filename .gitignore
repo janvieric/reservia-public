@@ -51,3 +51,14 @@ Thumbs.db
 
 /backend/.env
 /backend/rsa
+/backend/src
+/backend/tsconfig.json
+
+/frontend/src
+/frontend/.browserslistrc
+/frontend/.editorconfig
+/frontend/angular.json
+/frontend/karma.conf.js
+/frontend/tsconfig.app.json
+/frontend/tsconfig.json
+/frontend/tsconfig.spec.json
